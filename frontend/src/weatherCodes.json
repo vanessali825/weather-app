@@ -1,30 +1,142 @@
-{
-    "0": "Clear sky",
-    "1": "Mainly clear", 
-    "2": "Partly cloudy",
-    "3": "Overcast",
-    "45": "Fog",
-    "48": "Depositing rime fog",
-    "51": "Light drizzle", 
-    "53": "Moderate drizzle",
-    "55": "Dense drizzle",
-    "56": "Light freezing drizzle",
-    "57": "Dense freezing drizzle",
-    "61": "Slight rain", 
-    "63": "Moderate rain",
-    "65": "Heavy rain",
-    "66": "Light freezing rain", 
-    "67": "Heavy freezing rain",
-    "71": "Slight snow fall", 
-    "73": "Moderate snow fall", 
-    "75": "Heavy snow fall",
-    "77": "Snow grains",
-    "80": "Slight rain showers", 
-    "81": "Moderate rain showers", 
-    "82": "Violent rain showers",
-    "85": "Slight snow showers", 
-    "86": "Heavy snow showers",
-    "95": "Slight to moderate thunderstorm",
-    "96": "Thunderstorm with slight hail",
-    "99": "Thunderstorm with heavy hail"
+{ 
+    "0": {
+        "description": "Clear sky",
+        "icon": "../imgs/sun.png",
+        "iconDescription": "Sunny"
+    },
+    "1": {
+        "description": "Mainly clear",
+        "icon": "../imgs/sun-cloud.png",
+        "iconDescription": "Sun w/ cloud"
+    },
+    "2": {
+        "description": "Partly cloudy",
+        "icon": "../imgs/sun-cloud.png",
+        "iconDescription": "Sun w/ cloud"
+    },
+    "3": {
+        "description": "Overcast",
+        "icon": "../imgs/sun-cloud.png",
+        "iconDescription": "Sun w/ cloud"
+    },
+    "45": {
+        "description": "Fog",
+        "icon": "../imgs/fog.png",
+        "iconDescription": "Fog"
+    },
+    "48": {
+        "description": "Depositing rime fog",
+        "icon": "../imgs/fog.png",
+        "iconDescription": "Fog"
+    },
+    "51": {
+        "description": "Light drizzle",
+        "icon": "../imgs/light-rain.png",
+        "iconDescription": "Drizzle"
+    },
+    "53": {
+        "description": "Moderate drizzle",
+        "icon": "../imgs/light-rain.png",
+        "iconDescription": "Drizzle"
+    },
+    "55": {
+        "description": "Dense drizzle",
+        "icon": "../imgs/light-rain.png",
+        "iconDescription": "Drizzle"
+    },
+    "56": {
+        "description": "Light freezing drizzle",
+        "icon": "../imgs/light-rain.png",
+        "iconDescription": "Freezing drizzle"
+    },
+    "57": {
+        "description": "Dense freezing drizzle",
+        "icon": "../imgs/light-rain.png",
+        "iconDescription": "Freezing drizzle"
+    },
+    "61": {
+        "description": "Slight rain",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Rain"
+    },
+    "63": {
+        "description": "Moderate rain",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Rain"
+    },
+    "65": {
+        "description": "Heavy rain",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Rain"
+    },
+    "66": {
+        "description": "Light freezing rain",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Freezing rain"
+    },
+    "67": {
+        "description": "Heavy freezing rain",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Freezing rain"
+    },
+    "71": {
+        "description": "Slight snow fall",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Snow fall"
+    },
+    "73": {
+        "description": "Moderate snow fall",
+        "icon": "../imgs/snow.png",
+        "iconDescription": "Snow fall"
+    },
+    "75": {
+        "description": "Heavy snow fall",
+        "icon": "../imgs/snow.png",
+        "iconDescription": "Snow fall"
+    },
+    "77": {
+        "description": "Snow grains",
+        "icon": "../imgs/snow.png",
+        "iconDescription": "Snow grains"
+    },
+    "80": {
+        "description": "Slight rain showers",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Rain"
+    },
+    "81": {
+        "description": "Moderate rain showers",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Rain"
+    },
+    "82": {
+        "description": "Violent rain showers",
+        "icon": "../imgs/rain.png",
+        "iconDescription": "Rain"
+    },
+    "85": {
+        "description": "Slight snow showers",
+        "icon": "../imgs/snow.png",
+        "iconDescription": "Snow shower"
+    },
+    "86": {
+        "description": "Heavy snow showers",
+        "icon": "../imgs/snow.png",
+        "iconDescription": "Snow shower"
+    },
+    "95": {
+        "description": "Slight to moderate thunderstorm",
+        "icon": "../imgs/thunderstorm.png",
+        "iconDescription": "Thunderstorm"
+    },
+    "96": {
+        "description": "Thunderstorm with slight hail",
+        "icon": "../imgs/thunderstorm-hail.png",
+        "iconDescription": "Thunderstorm w/ hail"
+    },
+    "99": {
+        "description": "Thunderstorm with heavy hail",
+        "icon": "../imgs/thunderstorm-hail.png",
+        "iconDescription": "Thunderstorm w/ hail"
+    }
 }

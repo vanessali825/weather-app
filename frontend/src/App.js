@@ -1,14 +1,17 @@
 import './App.css';
-import SearchBar from './components/SearchBar';
-import WeatherInfo from './components/WeatherInfo';
+import { Routes, Route } from "react-router-dom";
+import HomePage from './pages/Home';
+import AboutPage from './pages/About';
+import ErrorPage from './pages/NotFound';
 
 function App() {
   return (
     <div className="App">
-      <h1>Weather Application</h1>
-      <SearchBar />
-      <br />
-      {/* <WeatherInfo /> */}
+      <Routes>
+        <Route path='/' element={ <HomePage /> }/>
+        <Route path='about' element={ <AboutPage /> }/>
+        <Route path='*' element={ <ErrorPage /> }/>
+      </Routes>
     </div>
   );
 }

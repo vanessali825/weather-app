@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import WeatherInfo from "./WeatherInfo";
-import weatherCodes from '../weatherCodes.json'
+import CurrentInfo from "./CurrentInfo";
+import weatherCodes from '../weatherCodes';
+import FiveDayInfo from "./FiveDayInfo";
+import {Container, Box, Grid, Button} from '@mui/material'
 
 export default function SearchBar(){
     // Capture location state
@@ -19,12 +21,17 @@ export default function SearchBar(){
 
     // Capture count state
     const [count, setCount] = useState(0)
-    
+
     // Capture weather data based on specified coordinates
     const [data, setData] = useState({
-        Temperature: '',
-        Weathercode: '',
-        Windspeed: ''
+        CurrentTemperature: '',
+        CurrentWeathercode: '',
+        CurrentWeathercodeText: '',
+        Windspeed: '',
+        Date: [],
+        Weathercode: [],
+        MaxTemp: [],
+        MinTemp: [],
     });
     
     // Grab input value & update format on submit
@@ -61,43 +68,92 @@ export default function SearchBar(){
                 .catch((error) => console.log(error))
         }}
     , [coordinates]);
-
+    
     // Get weather info from server & extract relevant data
     useEffect(() => {
         if (count !== 0) { // condition prevents this useEffect from mounting before actual call
-          axios.get(`${process.env.REACT_APP_URL}/general`)
-                .then(response => {
-                    let data = response.data.current_weather;
-                    let weatherText = weatherCodes[data.weathercode];
-                    console.log(data.temperature, weatherText, data.windspeed)
+          axios.get(`${process.env.REACT_APP_URL}/info`)
+                .then(async response => {
+                    let data = response.data;
+                    let weatherText = weatherCodes[data.current_weather.weathercode].description;
                     setData({
-                        Temperature: data.temperature,
-                        Weathercode: weatherText, 
-                        Windspeed: data.windspeed,
+                        CurrentTemperature: data.current_weather.temperature,
+                        CurrentWeathercode: data.current_weather.weathercode,
+                        CurrentWeathercodeText: weatherText, 
+                        Windspeed: data.current_weather.windspeed,
+                        Date: data.daily.time,
+                        Weathercode: data.daily.weathercode,
+                        MaxTemp: data.daily.temperature_2m_max,
+                        MinTemp: data.daily.temperature_2m_min,
                     })
+                    console.log(data.current_weather.temperature, data.current_weather.weathercode, weatherText, data.current_weather.windspeed, data.daily.time, data.daily.weathercode, data.daily.temperature_2m_max, data.daily.temperature_2m_min);                    
                 })     
                 .catch(error => console.error(error))
             }}, [count]);
 
     return(
-        <div>
-            <p>Where are we looking at today?</p>            
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type="text"
-                    id="input"
-                    placeholder="City, Country"
-                />
-                <button type="submit">Search</button>
-            </form>
-            {data.Temperature !== '' ? 
-                <WeatherInfo 
-                    temperature={data.Temperature}
-                    weathercode={data.Weathercode}
-                    windspeed={data.Windspeed}    
-                /> : null
-            }
-        </div>
+        <>
+            <Container sx={{height:'500px'}}> 
+               <Box sx={{
+                    margin: 'auto', 
+                    textAlign: 'center',
+                    paddingTop: '200px',
+                    paddingBottom: '200px',
+                    backgroundColor:'' // TBD
+                }}> 
+                    <h2>Where are we looking at today?</h2> 
+                    <form onSubmit={handleSubmit}>
+                    <input 
+                        type="text"
+                        id="input"
+                        placeholder="City, Country"
+                    />
+                    <Button type="submit" >Search</Button>
+                    </form> 
+                </Box> 
+            </Container>
+            <Container>
+                <Grid container spacing={2} sx={{
+                    paddingTop: '100px',
+                    paddingBottom: '100px',
+                }}>
+                    <Grid item xs={6} sm={6} sx={{ // do I need to adjust the breakpoints?
+                        margin: 'auto',
+                        textAlign: 'center'
+                    }}>
+                        {data.CurrentTemperature !== '' ?
+                            <img src={weatherCodes[data.CurrentWeathercode].icon} width="100px"/>
+                            : null 
+                        }
+                        
+                    </Grid>
+                    <Grid item xs={6} sm={6} sx={{
+                        margin: 'auto', 
+                        textAlign: 'center',
+                    }}> 
+                        {data.CurrentTemperature !== '' ?
+                            <h4>Current Weather:</h4> : null
+                        }
+                        {data.CurrentTemperature !== '' ? 
+                            <CurrentInfo 
+                                temperature={data.CurrentTemperature}
+                                weathercode={data.CurrentWeathercodeText}
+                                windspeed={data.Windspeed}    
+                            /> : null
+                            
+                        }
+                    </Grid>
+                </Grid>
+            </Container>
+                {data.CurrentTemperature !== '' ? 
+                    <FiveDayInfo
+                        date={data.Date}
+                        weathercode={data.Weathercode}
+                        minTemp={data.MinTemp}
+                        maxTemp={data.MaxTemp}    
+                    /> : null
+                }
+        </>
     )
 }
 

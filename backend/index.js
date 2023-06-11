@@ -8,9 +8,9 @@ const cors = require('cors');
 const app = express();
 
 // INITIALIZE MIDDLEWARE
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
-app.use(bodyParser.json()) // parse application/json
+app.use(cors()); // allows cross-origin resource sharing
+app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded; for post requests
+app.use(bodyParser.json()) // parse application/json; for post requests
 
 // EMPTY VARIABLES
 let lng;
@@ -32,8 +32,8 @@ app.post('/coordinates', async (req, res) => {
 })
 
 // GET REQUEST - REQUESTING DATA BASED ON COORDINATES
-app.get('/general', async (req, res) => {
-    await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
+app.get('/info', async (req, res) => {
+    await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&forecast_days=5&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`)
         .then(response => {
             res.send(response.data);
             console.log(response.data)
