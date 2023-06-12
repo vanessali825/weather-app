@@ -62,7 +62,7 @@ export default function SearchBar(){
     // Effect when coordinates state is updated; post coordinate info to server
     useEffect(() => {
         if (coordinates.Lat !== '') { // condition prevents this useEffect from mounting before actual call
-            axios.post(`${process.env.REACT_APP_URL}/coordinates`, coordinates)
+            axios.post(`${process.env.REACT_APP_API_SERVER}/coordinates`, coordinates)
                 .then(() => console.log(coordinates, 'Input delivered'))
                 .then(() => setCount(count + 1))
                 .catch((error) => console.log(error))
@@ -72,7 +72,7 @@ export default function SearchBar(){
     // Get weather info from server & extract relevant data
     useEffect(() => {
         if (count !== 0) { // condition prevents this useEffect from mounting before actual call
-          axios.get(`${process.env.REACT_APP_URL}/info`)
+          axios.get(`${process.env.REACT_APP_API_SERVER}/info`)
                 .then(async response => {
                     let data = response.data;
                     let weatherText = weatherCodes[data.current_weather.weathercode].description;
