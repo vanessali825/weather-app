@@ -15,7 +15,7 @@ require("dotenv").config();
 const app = express();
 
 // INITIALIZE MIDDLEWARE
-app.use(cors({origin: process.env.frontend_server})); // allows cross-origin resource sharing
+app.use(cors({origin: process.env.FRONTEND_SERVER})); // allows cross-origin resource sharing
 app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded; for post requests
 app.use(bodyParser.json()) // parse application/json; for post requests
 jwtStrategy.initialize();
@@ -54,7 +54,7 @@ app.post("/auth/login", async (req, res) => {
           id: query.id,
           email: query.email,
         }; 
-        const token = jwt.sign(payload, process.env.jwt_secret);
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
         res.json( { token });
       } else { 
         res.sendStatus(401);
@@ -70,7 +70,6 @@ app.get("/data", jwtStrategy.authenticate(), async (req, res) => {
 // POST REQUEST - RECEIVE COORDINATE DATA FROM CLIENT 
 app.post('/coordinates', async (req, res) => {
     const body = await req.body;
-    // console.log(body);    
     lat = body.Lat;
     lng = body.Lng;
     console.log(lat, lng);

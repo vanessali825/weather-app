@@ -1,11 +1,12 @@
 /** SEARCH BAR - PURE COMPONENT */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import CurrentInfo from "./CurrentInfo";
 import weatherCodes from '../weatherCodes';
 import FiveDayInfo from "./FiveDayInfo";
-import {Container, Box, Grid, Button} from '@mui/material'
+import { Container, Box, Grid, Typography, TextField, Button } from '@mui/material';
+import ScrollToTop from "react-scroll-to-top";
 
 export default function SearchBar(){
     // Capture location state
@@ -34,15 +35,22 @@ export default function SearchBar(){
         MinTemp: [],
     });
     
+    // Auto-scroll set up
+    const scrollRef = useRef(null);
+
     // Grab input value & update format on submit
-    const handleSubmit = (e) => {
+    async function handleSubmit (e) {
         e.preventDefault();
         const input = e.target.input.value; // capture input information
         const newInput = input.replaceAll(",", "+")
         setLocation({
             String: `${newInput}`
         });
-    }
+        if (scrollRef.current) {
+          // Will scroll smoothly to the top of the next section
+          scrollRef.current.scrollIntoView({ behavior: 'smooth' });    
+        }   
+    }    
 
     // Effect when location state is updated; pull lat + lng coordinate information
     useEffect(() => {
@@ -93,31 +101,42 @@ export default function SearchBar(){
 
     return(
         <>
-            <Container sx={{height:'500px'}}> 
-               <Box sx={{
-                    margin: 'auto', 
-                    textAlign: 'center',
-                    paddingTop: '200px',
-                    paddingBottom: '200px',
-                    backgroundColor:'' // TBD
-                }}> 
-                    <h2>Where are we looking at today?</h2> 
+            <Container> 
+               <Box 
+                    display='flex'
+                    flexDirection= 'column'
+                    alignItems='center'
+                    justifyContent='center'
+                    textAlign='center'
+                    minHeight='100vh'
+                > 
+                    <Typography variant='h4'>Where are we looking at today?</Typography> 
                     <form onSubmit={handleSubmit}>
-                    <input 
+                    <TextField 
+                        sx={{minWidth: '350px', backgroundColor: 'white'}}
+                        margin="dense"
                         type="text"
                         id="input"
                         placeholder="City, Country"
-                    />
-                    <Button type="submit" >Search</Button>
+                    /> <br />
+                    <Button type="submit" variant="contained" size='medium'>Search</Button>
                     </form> 
                 </Box> 
             </Container>
             <Container>
+                {data.CurrentTemperature !== '' ?
+                    <Box>
+                        <Typography variant="h5">Current Weather:</Typography>
+                    </Box>
+                    : null 
+                }
+            </Container>
+            <Container ref={scrollRef}>
                 <Grid container spacing={2} sx={{
-                    paddingTop: '100px',
+                    paddingTop: '50px',
                     paddingBottom: '100px',
                 }}>
-                    <Grid item xs={6} sm={6} sx={{ // do I need to adjust the breakpoints?
+                    <Grid item xs={6} sm={6} sx={{ 
                         margin: 'auto',
                         textAlign: 'center'
                     }}>
@@ -126,33 +145,40 @@ export default function SearchBar(){
                             : null 
                         }
                         
-                    </Grid>
+                  </Grid>
                     <Grid item xs={6} sm={6} sx={{
                         margin: 'auto', 
                         textAlign: 'center',
                     }}> 
-                        {data.CurrentTemperature !== '' ?
-                            <h4>Current Weather:</h4> : null
-                        }
                         {data.CurrentTemperature !== '' ? 
                             <CurrentInfo 
                                 temperature={data.CurrentTemperature}
                                 weathercode={data.CurrentWeathercodeText}
                                 windspeed={data.Windspeed}    
-                            /> : null
-                            
+                            /> : null                            
                         }
                     </Grid>
-                </Grid>
+                </Grid>            
             </Container>
-                {data.CurrentTemperature !== '' ? 
-                    <FiveDayInfo
-                        date={data.Date}
-                        weathercode={data.Weathercode}
-                        minTemp={data.MinTemp}
-                        maxTemp={data.MaxTemp}    
-                    /> : null
+            <Container>
+                {data.CurrentTemperature !== '' ?
+                    <Box>
+                        <Typography variant="h5">Five-Day Weather Forecast:</Typography>
+                    </Box>
+                    : null 
                 }
+            </Container>
+            <ScrollToTop /> 
+                <Container>   
+                    {data.CurrentTemperature !== '' ? 
+                        <FiveDayInfo
+                            date={data.Date}
+                            weathercode={data.Weathercode}
+                            minTemp={data.MinTemp}
+                            maxTemp={data.MaxTemp}    
+                        /> : null
+                    }
+                </Container>
         </>
     )
 }
