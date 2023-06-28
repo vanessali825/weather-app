@@ -5,8 +5,9 @@ import Login from "./pages/Login";
 import Secret from './pages/Secret'
 import RequireAuth from './components/RequireAuth';
 import Home from './pages/Home';
-import About from './pages/About';
 import NotFound from './components/NotFound';
+import Footer from './components/Footer';
+import { Typography } from '@mui/material';
 
 function App() {
   return (
@@ -23,9 +24,9 @@ function App() {
             <Home />
           </RequireAuth>
         }/>
-        <Route path='about' element={ <About /> }/>
         <Route path='*' element={ <NotFound /> }/>
       </Routes>
+      <Typography><Footer /></Typography>
     </div>
   );
 }
