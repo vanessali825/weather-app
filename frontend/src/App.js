@@ -18,7 +18,8 @@ function App() {
         <Route path='/secret' element={ 
           <RequireAuth>
             <Secret />
-          </RequireAuth> }/>
+          </RequireAuth> 
+        }/>
         <Route path='/home' element={ 
           <RequireAuth>
             <Home />

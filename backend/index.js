@@ -36,11 +36,11 @@ app.get('/', async (req, res) => {
 
 /** ACCOUNT ROUTES - SIGN UP + LOG IN */ 
 app.post("/auth/signup", async (req, res) => {
-    const { email, password } = req.body;
+    const { first_name, last_name, email, password } = req.body;
     let query = await knex("users").where({ email }).first();
     if (query === undefined) {
       const hashed = await bcrypt.hash(password, 10);
-      await knex("users").insert({ email, password: hashed });
+      await knex("users").insert({ first_name, last_name, email, password: hashed });
       res.sendStatus(200);
     } else {
       res.sendStatus(401);
